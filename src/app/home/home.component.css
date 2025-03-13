@@ -1,0 +1,36 @@
+/* Fondo negro para toda la sección */
+.container {
+    background-color: black;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  /* Tarjetas del catálogo */
+  .catalogo-card {
+    background: white;
+    border: 2px solid red;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  /* Animación al pasar el mouse */
+  .catalogo-card:hover {
+    transform: scale(1.05);
+  }
+  
+  /* Imágenes dentro de las tarjetas */
+  .catalogo-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 2px solid red;
+  }
+  
+  /* Estilo de los títulos */
+  .card-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: black;
+  }
+  

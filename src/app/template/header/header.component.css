@@ -1,0 +1,27 @@
+/* Fondo negro para la barra de navegación */
+.custom-navbar {
+    background-color: black;
+    padding: 10px 20px;
+}
+
+/* Estilo para el nombre de la página */
+.custom-brand {
+    font-size: 24px;
+    font-weight: bold;
+    color: white;
+}
+
+/* Botones con borde rojo y efectos al pasar el cursor */
+.custom-btn {
+    border: 2px solid red;
+    color: white;
+    background-color: black;
+    padding: 8px 12px;
+    transition: 0.3s;
+}
+
+/* Cambia a rojo el fondo cuando pasas el mouse */
+.custom-btn:hover {
+    background-color: red;
+    color: black;
+}

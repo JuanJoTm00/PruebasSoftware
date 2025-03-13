@@ -1,0 +1,16 @@
+<form>
+    <div class="mb-3">
+        <label for="nombre" class="form-label">Nombre</label>
+        <input type="text" *ngIf="administrador" class="form-control" id="nombre" name="nombre" placeholder="Ingrese el nombre" [(ngModel)]="administrador.Nombre">
+      </div>
+
+      <div class="mb-3">
+        <label for="Email" class="form-label">Email</label>
+        <input type="text" *ngIf="administrador" class="form-control" id="email" name="email" placeholder="Ingrese el Email" [(ngModel)]="administrador.Email">
+      </div>
+
+      <div class="mb-3">
+        <label for="Contrasena" class="form-label">Contraseña</label>
+        <input type="text" *ngIf="administrador" class="form-control" id="contrasena" name="contrasena" placeholder="Ingrese la Contraseña" [(ngModel)]="administrador.Contrasena">
+      </div>
+</form>

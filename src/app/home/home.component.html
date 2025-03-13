@@ -1,0 +1,14 @@
+<div class="container mt-4">
+  <div class="row">
+    <div *ngFor="let vehiculo = vehiculos" class="col-md-4 col-sm-6 col-12 mb-4">
+      <div class="card catalogo-card">
+        <img [src]="vehiculo.imagen" class="card-img-top" alt="{{ vehiculo.marca }} {{ vehiculo.modelo }}">
+        <div class="card-body text-center">
+          <h5 class="card-title">{{ vehiculo.marca }} {{ vehiculo.modelo }}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

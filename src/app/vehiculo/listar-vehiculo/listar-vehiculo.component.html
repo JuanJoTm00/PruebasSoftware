@@ -1,0 +1,69 @@
+<div class="row justify-content-end" >
+    <div class="col-lg-1 col 12">
+     <button class="btn btn-success" (click)="Nuevovehiculo()" >
+       Nuevo
+     </button>  
+    </div>
+   </div>
+   
+   <div class="d-flex justify-content-center" *ngIf="isloading">
+     <div class="spinner-border" role="status">
+       <span class="visually-hidden">Loading...</span>
+     </div>
+   </div>
+   
+   <div class="row"*ngIf="!isloading"> 
+       <table class="table table-striped table-hover">
+           <thead>
+             <tr>
+               <th scope="col">Id</th>
+               <th scope="col">Marca</th>
+               <th scope="col">Modelo</th>
+               <th scope="col">Año</th>
+               <th scope="col">Kilometraje</th>
+               <th scope="col">Tipo</th>
+               <th scope="col">Descripción</th>
+               <th scope="col">Imagen</th>
+               
+             </tr>
+           </thead>
+           <tbody>
+             <tr *ngFor="let ad of Vectorvehiculo">
+               <th scope="row">{{ad.Idvehiculo}}</th>
+               <td>{{ad.Marca}}</td>
+               <td>{{ad.Modelo}}</td>
+               <td>{{ad.Ano}}</td>
+               <td>{{ad.Kilometraje}}</td>
+               <td>{{ad.Tipo}}</td>
+               <td>{{ad.Descripcion}}</td>
+               <td>{{ad.ImagenPrincipal}}</td>
+               <td> 
+                   <button class="btn btn-warning me-2" (click)="Editarvehiculo(ad)">Editar</button>
+                   <button class="btn btn-danger" (click)="Eliminarvehiculo(ad)">Eliminar</button>
+               </td>
+             </tr>
+           </tbody>
+         </table>
+   </div>
+   
+     <!-- Modal -->
+     <div class="modal fade" id="modalVehiculo" #modalVehiculo data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalVehiculoLabel" aria-hidden="true">
+       <div class="modal-dialog">
+         <div class="modal-content">
+           <div class="modal-header">
+             <h1 class="modal-title fs-5" id="modalVehiculoLabel" >{{isNew?' Nuevo ':' Editar '}}Vehiculo {{this.vehiculoSeleccionado}}</h1>
+             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+           </div>
+           <div class="modal-body">
+               <app-cu-vehiculo
+                [vehiculo]="vehiculoSeleccionado">   
+               </app-cu-vehiculo>
+           </div>
+           <div class="modal-footer">
+             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+             <button type="button" class="btn btn-primary" (click)="Guardarvehiculo()" >Guardar</button>
+           </div>
+         </div>
+       </div>
+     </div>
+   

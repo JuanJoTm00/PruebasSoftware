@@ -1,0 +1,60 @@
+<div class="row justify-content-end" >
+ <div class="col-lg-1 col 12">
+  <button class="btn btn-success" (click)="NuevoAdministrador()" >
+    Nuevo
+  </button>  
+ </div>
+</div>
+
+<div class="d-flex justify-content-center" *ngIf="isloading">
+  <div class="spinner-border" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<div class="row"*ngIf="!isloading"> 
+    <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">Email</th>
+            <th scope="col">Contraseña</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ad of Vectoradministrador">
+            <th scope="row">{{ad.Idadminstrador}}</th>
+            <td>{{ad.Nombre}}</td>
+            <td>{{ad.Email}}</td>
+            <td>{{ad.Contrasena}}</td>
+            <td> 
+                <button class="btn btn-warning me-2" (click)="EditarAdminstrador(ad)">Editar</button>
+                <button class="btn btn-danger" (click)="EliminarAdministrador(ad)">Eliminar</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+</div>
+
+  <!-- Modal -->
+  <div class="modal fade" id="modalAdministrador" #modalAdministrador data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="modalAdministradorLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="modalAdministradorLabel" >{{isNew?' Nuevo ':' Editar '}}Administrador {{this.administradorSeleccionado?.Nombre}}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <app-cu-administrador
+             [administrador]="administradorSeleccionado">
+                 
+</app-cu-administrador>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" class="btn btn-primary" (click)="GuardarAdministrador()" >Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,17 @@
+/* Línea roja gruesa */
+.custom-hr {
+    border: 2px solid rgb(151, 6, 6);
+    margin: 20px 0;
+  }
+  
+  /* Texto estilizado */
+  .footer-text {
+    font-size: 20px;
+    font-weight: bold;
+    color: white;
+    background-color: black;
+    padding: 10px;
+    border-radius: 5px;
+    display: inline-block;
+  }
+  
