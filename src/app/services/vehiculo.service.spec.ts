@@ -44,13 +44,13 @@ describe('VehiculoService', () => {
     };
 
     service.postvehiculo(nuevoVehiculo).subscribe(response => {
-      expect(response).toBeUndefined(); // Porque devuelve void
+      expect(response).toBeUndefined();
     });
 
     const req = httpMock.expectOne(`${apiUrl}/add`);
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual(nuevoVehiculo);
-    req.flush(null); // vacío porque devuelve void
+    req.flush(null); 
   });
 
   it('debe actualizar un vehículo (PUT)', () => {
