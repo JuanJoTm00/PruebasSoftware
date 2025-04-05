@@ -35,7 +35,7 @@ export class ListarAdministradorComponent {
 
   isloading=true;
 
-  EditarAdminstrador(administrador:administrador){
+  EditarAdministrador(administrador:administrador){
     this._util.AbrirModal(this.modal)
     this.isNew=false;
     this.administradorSeleccionado= administrador;
@@ -47,48 +47,53 @@ export class ListarAdministradorComponent {
     this.administradorSeleccionado={Idadminstrador:0, Nombre:"",Email:"",Contrasena:""};
   }
 
-  GuardarAdministrador(){
-    if(this.isNew){
-      this.Vectoradministrador.push(this.administradorSeleccionado!); //API POST
-      this.administradorSeleccionado=undefined;
-      this._util.CerrarModal(this.modal)
-    }else{
-      //API PUT
-      this.administradorSeleccionado=undefined;
-      this._util.CerrarModal(this.modal)
-    }
-    Swal.fire({title:'Cambios guardados corectamente', icon:'success'})
-  }
-  EliminarAdministrador(ad:administrador){
-    Swal.fire(
-      {
-        icon:'question',
-        title:`¿Está seguro de eliminar '${ad.Nombre}'?`,
-        showCancelButton:true,
-        showConfirmButton:true,
-        cancelButtonText:'No',
-        confirmButtonText:'Sí',
-        allowOutsideClick:false,
-        buttonsStyling:false,
-        reverseButtons:true,
-        
-        customClass:{
-          cancelButton:'btn btn-secondary me-2',
-          confirmButton:'btn btn-danger',
-
+  GuardarAdministrador() {
+        if (this.administradorSeleccionado) {
+          if (this.isNew) {
+            // API POST para agregar nuevo vehículo
+            this._administradorservice.postadministrador(this.administradorSeleccionado).subscribe(() => {
+              Swal.fire({ title: 'Admin agregado correctamente', icon: 'success' });
+              this.LoadAdministrador(); // Recargar lista
+              this.administradorSeleccionado = undefined;
+              this._util.CerrarModal(this.modal);
+            }, error => {
+              Swal.fire({ title: 'Error', text: error.message, icon: 'error' });
+            });
+          } else {
+            // API PUT para actualizar vehículo existente
+            this._administradorservice.putadministrador(this.administradorSeleccionado.Idadminstrador, this.administradorSeleccionado).subscribe(() => {
+              Swal.fire({ title: 'Admin actualizado correctamente', icon: 'success' });
+              this.LoadAdministrador(); // Recargar lista
+              this.administradorSeleccionado = undefined;
+              this._util.CerrarModal(this.modal);
+            }, error => {
+              Swal.fire({ title: 'Error', text: error.message, icon: 'error' });
+            });
+          }
         }
       }
-    )
-    .then(rs=>{
-      if(rs.isConfirmed){
-        //llamda api
+
+  EliminarAdministrador(id: number) {
         Swal.fire({
-          title: 'Eliminado Correctamente',
-          icon: 'success'
-        })
+          title: '¿Estás seguro?',
+          text: 'No podrás revertir esta acción',
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#d33',
+          cancelButtonColor: '#3085d6',
+          confirmButtonText: 'Sí, eliminar',
+          cancelButtonText: 'Cancelar'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            this._administradorservice.deleteadministrador(id).subscribe(() => {
+              Swal.fire({ title: 'Vehículo eliminado', icon: 'success' });
+              this.LoadAdministrador(); // Recargar lista después de eliminar
+            }, error => {
+              Swal.fire({ title: 'Error al eliminar', text: error.message, icon: 'error' });
+            });
+          }
+        });
       }
-    })
-  }
 
 
 }

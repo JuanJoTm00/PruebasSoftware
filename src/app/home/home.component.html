@@ -1,10 +1,16 @@
 <div class="container mt-4">
+  <h2 class="text-center mb-4">Catálogo de Vehículos</h2>
+
   <div class="row">
-    <div *ngFor="let vehiculo = vehiculos" class="col-md-4 col-sm-6 col-12 mb-4">
-      <div class="card catalogo-card">
-        <img [src]="vehiculo.imagen" class="card-img-top" alt="{{ vehiculo.marca }} {{ vehiculo.modelo }}">
-        <div class="card-body text-center">
-          <h5 class="card-title">{{ vehiculo.marca }} {{ vehiculo.modelo }}</h5>
+    <div class="col-md-4 mb-4" *ngFor="let vehiculo of vehiculo">
+      <div class="card h-100">
+        <img [src]="vehiculo.ImagenPrincipal || 'assets/img/placeholder.png'" class="card-img-top" alt="Imagen del Vehículo">
+        <div class="card-body">
+          <h5 class="card-title">{{ vehiculo.Marca }} {{ vehiculo.Modelo }}</h5>
+          <p class="card-text"><strong>Año:</strong> {{ vehiculo.Ano }}</p>
+          <p class="card-text"><strong>Tipo:</strong> {{ vehiculo.Tipo }}</p>
+          <p class="card-text"><strong>Kilometraje:</strong> {{ vehiculo.Kilometraje }} km</p>
+          <button class="btn btn-primary">Ver Detalles</button>
         </div>
       </div>
     </div>

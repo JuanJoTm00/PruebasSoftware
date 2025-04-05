@@ -9,14 +9,28 @@ import { environment } from '../../environments/environment';
   providedIn: 'root'
 })
 export class VehiculoService {
-  apiBase='';
+  apiBase='http://localhost:3000/api/';
 
 
   constructor(private _http:HttpClient) { 
     this.apiBase=environment.urlApiBase+'vehiculo';
   }
 
-  getvehiculo(): Observable<vehiculo[]>{
-    return this._http.get<vehiculo[]>(this.apiBase + '/');
+  getvehiculo(): Observable<vehiculo[]> {
+    return this._http.get<vehiculo[]>(`${this.apiBase}/`);
+}
+
+
+  postvehiculo(nuevoVehiculo: vehiculo): Observable<void> {
+    return this._http.post<void>(`${this.apiBase}/add`, nuevoVehiculo);
   }
+
+  putvehiculo(id: number, vehiculoEditado: vehiculo): Observable<void> {
+    return this._http.put<void>(`${this.apiBase}/${id}`, vehiculoEditado);
+  }
+
+  deletevehiculo(id: number): Observable<void> {
+    return this._http.delete<void>(`${this.apiBase}/${id}`);
+  }
+
 }

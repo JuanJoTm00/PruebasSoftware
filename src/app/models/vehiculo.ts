@@ -1,3 +1,5 @@
+import { imagenvehiculo } from "./imagenvehiculo";
+
 export interface vehiculo {
     Idvehiculo: number;
     Marca: string;
@@ -6,4 +8,7 @@ export interface vehiculo {
     Kilometraje: number;
     Tipo: "Moto"|"Carro";
     Descripcion:string;
-    ImagenPrincipal:string;}
+    ImagenPrincipal:string;
+    Imagenes?: imagenvehiculo[];
+
+}

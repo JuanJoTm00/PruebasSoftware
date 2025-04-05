@@ -5,6 +5,8 @@ import { VehiculoService } from '../../services/vehiculo.service';
 import Swal from 'sweetalert2';
 import { Modal } from 'bootstrap';
 import { Title } from '@angular/platform-browser';
+import { ImagenvehiculoService } from '../../services/imagenvehiculo.service';
+import { imagenvehiculo } from '../../models/imagenvehiculo';
 
 @Component({
   selector: 'app-listar-vehiculo',
@@ -13,12 +15,18 @@ import { Title } from '@angular/platform-browser';
   styleUrl: './listar-vehiculo.component.css'
 })
 export class ListarVehiculoComponent {
-   @ViewChild('modalAdministrador') modal:ElementRef | undefined;
+   @ViewChild('modalVehiculo') modal:ElementRef | undefined;
   
     Vectorvehiculo: vehiculo[]=[
       
     ];
-    constructor(private _vehiculoservice:VehiculoService,private _util:UtilityService){
+    constructor(
+      private _vehiculoservice:VehiculoService,
+      private _imagenvehiculoservice: ImagenvehiculoService,
+      private _util:UtilityService
+    )
+    
+    {
      this.Loadvehiculo();
     }
     Loadvehiculo(){
@@ -40,55 +48,86 @@ export class ListarVehiculoComponent {
       this._util.AbrirModal(this.modal)
       this.isNew=false;
       this.vehiculoSeleccionado= vehiculo;
+      // Cargar imágenes del vehículo
+    this._imagenvehiculoservice.getImagenesPorVehiculo(vehiculo.Idvehiculo).subscribe((imagenes) => {
+      this.vehiculoSeleccionado!.Imagenes = imagenes;
+    });
     }
   
     Nuevovehiculo(){
       this._util.AbrirModal(this.modal);
       this.isNew=true;
-      this.vehiculoSeleccionado={Idvehiculo:0, Marca:"",Modelo:"",Ano:0,Kilometraje:0,Tipo:"Carro",Descripcion:"",ImagenPrincipal:""};
+      this.vehiculoSeleccionado={Idvehiculo:0, Marca:"",Modelo:"",Ano:0,Kilometraje:0,Tipo:"Carro",Descripcion:"",ImagenPrincipal:"",Imagenes:[]};
     }
   
-    Guardarvehiculo(){
-      if(this.isNew){
-        this.Vectorvehiculo.push(this.vehiculoSeleccionado!); //API POST
-        this.vehiculoSeleccionado=undefined;
-        this._util.CerrarModal(this.modal)
-      }else{
-        //API PUT
-        this.vehiculoSeleccionado=undefined;
-        this._util.CerrarModal(this.modal)
+    Guardarvehiculo() {
+      if (this.vehiculoSeleccionado) {
+        if (this.isNew) {
+          // API POST para agregar nuevo vehículo
+          this._vehiculoservice.postvehiculo(this.vehiculoSeleccionado).subscribe(() => {
+            Swal.fire({ title: 'Vehículo agregado correctamente', icon: 'success' });
+            this.Loadvehiculo(); // Recargar lista
+            this.vehiculoSeleccionado = undefined;
+            this._util.CerrarModal(this.modal);
+          }, error => {
+            Swal.fire({ title: 'Error al agregar vehículo', text: error.message, icon: 'error' });
+          });
+        } else {
+          // API PUT para actualizar vehículo existente
+          this._vehiculoservice.putvehiculo(this.vehiculoSeleccionado.Idvehiculo, this.vehiculoSeleccionado).subscribe(() => {
+            Swal.fire({ title: 'Vehículo actualizado correctamente', icon: 'success' });
+            this.Loadvehiculo(); // Recargar lista
+            this.vehiculoSeleccionado = undefined;
+            this._util.CerrarModal(this.modal);
+          }, error => {
+            Swal.fire({ title: 'Error al actualizar vehículo', text: error.message, icon: 'error' });
+          });
+        }
       }
-      Swal.fire({title:'Cambios guardados corectamente', icon:'success'})
     }
-    Eliminarvehiculo(ad:vehiculo){
-      Swal.fire(
-        {
-          icon:'question',
-          title:`¿Está seguro de eliminar?`,
-          showCancelButton:true,
-          showConfirmButton:true,
-          cancelButtonText:'No',
-          confirmButtonText:'Sí',
-          allowOutsideClick:false,
-          buttonsStyling:false,
-          reverseButtons:true,
-          
-          customClass:{
-            cancelButton:'btn btn-secondary me-2',
-            confirmButton:'btn btn-danger',
+
+    Eliminarvehiculo(id: number) {
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'No podrás revertir esta acción',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this._vehiculoservice.deletevehiculo(id).subscribe(() => {
+            Swal.fire({ title: 'Vehículo eliminado', icon: 'success' });
+            this.Loadvehiculo(); // Recargar lista después de eliminar
+          }, error => {
+            Swal.fire({ title: 'Error al eliminar', text: error.message, icon: 'error' });
+          });
+        }
+      });
+    }
+
+    AgregarImagenVehiculo(url: string) {
+      if (!this.vehiculoSeleccionado) return;
   
-          }
-        }
-      )
-      .then(rs=>{
-        if(rs.isConfirmed){
-          //llamda api
-          Swal.fire({
-            title: 'Eliminado Correctamente',
-            icon: 'success'
-          })
-        }
-      })
+      const nuevaImagen: imagenvehiculo = {
+        Idimagen: 0,
+        Idvehiculo: this.vehiculoSeleccionado.Idvehiculo,
+        UrlImagen: url
+      };
+  
+      this._imagenvehiculoservice.agregarImagen(nuevaImagen).subscribe(() => {
+        this.vehiculoSeleccionado!.Imagenes!.push(nuevaImagen);
+        Swal.fire({ title: 'Imagen añadida', icon: 'success' });
+      });
+    }
+
+    EliminarImagenVehiculo(Idimagen: number) {
+      this._imagenvehiculoservice.eliminarImagen(Idimagen).subscribe(() => {
+        this.vehiculoSeleccionado!.Imagenes = this.vehiculoSeleccionado!.Imagenes!.filter(img => img.Idimagen !== Idimagen);
+        Swal.fire({ title: 'Imagen eliminada', icon: 'success' });
+      });
     }
 
 }

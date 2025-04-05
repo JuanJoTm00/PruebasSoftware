@@ -9,4 +9,5 @@ import { vehiculo } from '../../models/vehiculo';
 })
 export class CuVehiculoComponent {
 @Input() vehiculo: vehiculo|undefined;
+
 }

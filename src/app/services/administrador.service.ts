@@ -17,5 +17,18 @@ export class AdministradorService {
   getAdministrador(): Observable<administrador[]>{
     return this._http.get<administrador[]>(this.apiBase + '/');
   }
+
+   postadministrador(NuevoAdministrador: administrador): Observable<void> {
+      return this._http.post<void>(`${this.apiBase}/add`, NuevoAdministrador);
+    }
+  
+    putadministrador(id: number, administradirEditado: administrador): Observable<void> {
+      return this._http.put<void>(`${this.apiBase}/${id}`, administradirEditado);
+    }
+  
+    deleteadministrador(id: number): Observable<void> {
+      return this._http.delete<void>(`${this.apiBase}/${id}`);
+    }
+  
   
 }
