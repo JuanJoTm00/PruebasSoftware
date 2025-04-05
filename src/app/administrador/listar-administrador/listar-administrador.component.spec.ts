@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ListarAdministradorComponent } from './listar-administrador.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('ListarAdministradorComponent', () => {
   let component: ListarAdministradorComponent;
@@ -8,7 +9,8 @@ describe('ListarAdministradorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ListarAdministradorComponent]
+      declarations: [ListarAdministradorComponent],
+      imports:[HttpClientTestingModule]
     })
     .compileComponents();
 

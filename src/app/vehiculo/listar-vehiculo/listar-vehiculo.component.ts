@@ -48,8 +48,7 @@ export class ListarVehiculoComponent {
       this._util.AbrirModal(this.modal)
       this.isNew=false;
       this.vehiculoSeleccionado= vehiculo;
-      // Cargar imágenes del vehículo
-    this._imagenvehiculoservice.getImagenesPorVehiculo(vehiculo.Idvehiculo).subscribe((imagenes) => {
+      this._imagenvehiculoservice.getImagenesPorVehiculo(vehiculo.Idvehiculo).subscribe((imagenes) => {
       this.vehiculoSeleccionado!.Imagenes = imagenes;
     });
     }
@@ -63,7 +62,6 @@ export class ListarVehiculoComponent {
     Guardarvehiculo() {
       if (this.vehiculoSeleccionado) {
         if (this.isNew) {
-          // API POST para agregar nuevo vehículo
           this._vehiculoservice.postvehiculo(this.vehiculoSeleccionado).subscribe(() => {
             Swal.fire({ title: 'Vehículo agregado correctamente', icon: 'success' });
             this.Loadvehiculo(); // Recargar lista
@@ -73,10 +71,9 @@ export class ListarVehiculoComponent {
             Swal.fire({ title: 'Error al agregar vehículo', text: error.message, icon: 'error' });
           });
         } else {
-          // API PUT para actualizar vehículo existente
           this._vehiculoservice.putvehiculo(this.vehiculoSeleccionado.Idvehiculo, this.vehiculoSeleccionado).subscribe(() => {
             Swal.fire({ title: 'Vehículo actualizado correctamente', icon: 'success' });
-            this.Loadvehiculo(); // Recargar lista
+            this.Loadvehiculo(); 
             this.vehiculoSeleccionado = undefined;
             this._util.CerrarModal(this.modal);
           }, error => {
@@ -100,7 +97,7 @@ export class ListarVehiculoComponent {
         if (result.isConfirmed) {
           this._vehiculoservice.deletevehiculo(id).subscribe(() => {
             Swal.fire({ title: 'Vehículo eliminado', icon: 'success' });
-            this.Loadvehiculo(); // Recargar lista después de eliminar
+            this.Loadvehiculo(); 
           }, error => {
             Swal.fire({ title: 'Error al eliminar', text: error.message, icon: 'error' });
           });
