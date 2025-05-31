@@ -50,20 +50,18 @@ export class ListarAdministradorComponent {
   GuardarAdministrador() {
         if (this.administradorSeleccionado) {
           if (this.isNew) {
-            // API POST para agregar nuevo vehículo
             this._administradorservice.postadministrador(this.administradorSeleccionado).subscribe(() => {
               Swal.fire({ title: 'Admin agregado correctamente', icon: 'success' });
-              this.LoadAdministrador(); // Recargar lista
+              this.LoadAdministrador();
               this.administradorSeleccionado = undefined;
               this._util.CerrarModal(this.modal);
             }, error => {
               Swal.fire({ title: 'Error', text: error.message, icon: 'error' });
             });
           } else {
-            // API PUT para actualizar vehículo existente
             this._administradorservice.putadministrador(this.administradorSeleccionado.Idadminstrador, this.administradorSeleccionado).subscribe(() => {
               Swal.fire({ title: 'Admin actualizado correctamente', icon: 'success' });
-              this.LoadAdministrador(); // Recargar lista
+              this.LoadAdministrador(); 
               this.administradorSeleccionado = undefined;
               this._util.CerrarModal(this.modal);
             }, error => {
@@ -87,7 +85,7 @@ export class ListarAdministradorComponent {
           if (result.isConfirmed) {
             this._administradorservice.deleteadministrador(id).subscribe(() => {
               Swal.fire({ title: 'Vehículo eliminado', icon: 'success' });
-              this.LoadAdministrador(); // Recargar lista después de eliminar
+              this.LoadAdministrador();
             }, error => {
               Swal.fire({ title: 'Error al eliminar', text: error.message, icon: 'error' });
             });

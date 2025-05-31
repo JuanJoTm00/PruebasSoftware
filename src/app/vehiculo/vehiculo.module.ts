@@ -4,6 +4,7 @@ import { ListarVehiculoComponent } from './listar-vehiculo/listar-vehiculo.compo
 import { CuVehiculoComponent } from './cu-vehiculo/cu-vehiculo.component';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { DetalleVehiculoModalComponent } from './detalle-vehiculo-modal/detalle-vehiculo-modal.component';
 
 const ROUTES: Routes=[
 {
@@ -15,7 +16,7 @@ const ROUTES: Routes=[
 @NgModule({
   declarations: [
     ListarVehiculoComponent,
-    CuVehiculoComponent
+    CuVehiculoComponent,
   ],
   imports: [
     CommonModule,

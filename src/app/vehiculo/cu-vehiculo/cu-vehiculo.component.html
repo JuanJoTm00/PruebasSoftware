@@ -1,38 +1,70 @@
 <form>
+  <div class="mb-3">
+    <label for="Marca" class="form-label">Marca</label>
+    <input type="text" *ngIf="vehiculo" class="form-control" id="Marca" name="Marca"
+      placeholder="Ingrese la marca del vehiculo" [(ngModel)]="vehiculo.Marca">
+  </div>
+
+  <div class="mb-3">
+    <label for="Modelo" class="form-label">Modelo</label>
+    <input type="text" *ngIf="vehiculo" class="form-control" id="Modelo" name="Modelo"
+      placeholder="Ingrese el Modelo del vehiculo" [(ngModel)]="vehiculo.Modelo">
+  </div>
+
+  <div class="mb-3">
+    <label for="Ano" class="form-label">Año</label>
+    <input type="text" *ngIf="vehiculo" class="form-control" id="Ano" name="Ano"
+      placeholder="Ingrese el año del vehiculo" [(ngModel)]="vehiculo.Ano">
+  </div>
+
+  <div class="mb-3">
+    <label for="Kilometraje" class="form-label">Kilometraje</label>
+    <input type="number" *ngIf="vehiculo" class="form-control" id="Kilometraje" name="Kilometraje"
+      placeholder="Ingrese el Kilometraje del vehiculo" [(ngModel)]="vehiculo.Kilometraje">
+  </div>
+
+  <div class="mb-3">
+    <label for="Tipo" class="form-label">Tipo</label>
+    <input type="text" *ngIf="vehiculo" class="form-control" id="Tipo" name="Tipo"
+      placeholder="Ingrese el tipo de vehiculo(Carro | Moto)" [(ngModel)]="vehiculo.Tipo">
+  </div>
+
+  <div class="mb-3">
+    <label for="Descripcion" class="form-label">Descripción</label>
+    <input type="text" *ngIf="vehiculo" class="form-control" id="Descripcion" name="Descripcion"
+      placeholder="Ingrese una descripción vehiculo" [(ngModel)]="vehiculo.Descripcion">
+  </div>
+
+  <div class="mb-3">
+    <label for="ImagenPrincipal" class="form-label">Imagen</label>
+    <input type="url" *ngIf="vehiculo" class="form-control" id="ImagenPrincipal" name="ImagenPrincipal"
+      placeholder="Ingrese la url de la imagen principal del vehiculo" [(ngModel)]="vehiculo.ImagenPrincipal">
+  </div>
+
+  <form>
     <div class="mb-3">
-        <label for="Marca" class="form-label">Marca</label>
-        <input type="text" *ngIf="vehiculo" class="form-control" id="Marca" name="Marca" placeholder="Ingrese la marca del vehiculo" [(ngModel)]="vehiculo.Marca">
+      <label for="Imagenes" class="form-label">Imágenes Adicionales</label>
+      <div class="input-group mb-3">
+        <input type="url" class="form-control" placeholder="Ingrese la URL de una imagen" [(ngModel)]="nuevaImagenUrl"
+          name="nuevaImagenUrl">
+        <button class="btn btn-outline-secondary" type="button" (click)="agregarImagen()">Agregar Imagen</button>
       </div>
-
-      <div class="mb-3">
-        <label for="Modelo" class="form-label">Modelo</label>
-        <input type="text" *ngIf="vehiculo" class="form-control" id="Modelo" name="Modelo" placeholder="Ingrese el Modelo del vehiculo" [(ngModel)]="vehiculo.Modelo">
+      <div *ngIf="vehiculo?.Imagenes && vehiculo?.Imagenes?.length ">
+        <h6>Imágenes actuales:</h6>
+        <ul class="list-group">
+          <li class="list-group-item d-flex justify-content-between align-items-center"
+            *ngFor="let img of vehiculo?.Imagenes">
+            <img [src]="img.UrlImagen" alt="Imagen del Vehículo" class="img-thumbnail"
+              style="max-width: 100px; max-height: 100px;">
+            <span class="ms-2 text-truncate">{{img.UrlImagen}}</span>
+            <button class="btn btn-danger btn-sm ms-auto" (click)="eliminarImagen(img.IdImagen!)">Eliminar</button>
+          </li>
+        </ul>
       </div>
-
-      <div class="mb-3">
-        <label for="Ano" class="form-label">Año</label>
-        <input type="text" *ngIf="vehiculo" class="form-control" id="Ano" name="Ano" placeholder="Ingrese el año del vehiculo" [(ngModel)]="vehiculo.Ano">
+      <div *ngIf="!vehiculo?.Imagenes || vehiculo?.Imagenes?.length === 0" class="text-muted">
+        No hay imágenes adicionales.
       </div>
-
-      <div class="mb-3">
-        <label for="Kilometraje" class="form-label">Kilometraje</label>
-        <input type="number" *ngIf="vehiculo" class="form-control" id="Kilometraje" name="Kilometraje" placeholder="Ingrese el Kilometraje del vehiculo" [(ngModel)]="vehiculo.Kilometraje">
-      </div>
-
-      <div class="mb-3">
-        <label for="Tipo" class="form-label">Tipo</label>
-        <input type="text" *ngIf="vehiculo" class="form-control" id="Tipo" name="Tipo" placeholder="Ingrese el tipo de vehiculo(Carro | Moto)" [(ngModel)]="vehiculo.Tipo">
-      </div>
-
-      <div class="mb-3">
-        <label for="Descripcion" class="form-label">Descripción</label>
-        <input type="text" *ngIf="vehiculo" class="form-control" id="Descripcion" name="Descripcion" placeholder="Ingrese una descripción vehiculo" [(ngModel)]="vehiculo.Descripcion">
-      </div>
-
-      <div class="mb-3">
-        <label for="ImagenPrincipal" class="form-label">Imagen</label>
-        <input type="url" *ngIf="vehiculo" class="form-control" id="ImagenPrincipal" name="ImagenPrincipal" placeholder="Ingrese la url de la imagen principal del vehiculo" [(ngModel)]="vehiculo.ImagenPrincipal">
-      </div>
-      
+    </div>
+  </form>
 
 </form>

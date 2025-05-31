@@ -1,10 +1,9 @@
-/* Línea roja gruesa */
 .custom-hr {
     border: 10px solid rgb(240, 11, 11);
     margin: 20px 0;
   }
   
-  /* Texto estilizado */
+  
   .footer-text {
     font-size: 20px;
     font-weight: bold;

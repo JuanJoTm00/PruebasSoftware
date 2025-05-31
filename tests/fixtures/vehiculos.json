@@ -1,0 +1,5 @@
+[
+  { "Idvehiculo": 1, "Marca": "Toyota", "Modelo": "Corolla", "Ano": 2020, "Kilometraje": 15000, "Descripcion": "Vehículo en excelente estado, ideal para ciudad.", "ImagenPrincipal": "https://via.placeholder.com/150/FF0000/FFFFFF?text=Toyota", "Tipo": "Carro" },
+  { "Idvehiculo": 2, "Marca": "Honda", "Modelo": "Civic", "Ano": 2018, "Kilometraje": 30000, "Descripcion": "Compacto y eficiente, perfecto para el día a día.", "ImagenPrincipal": "https://via.placeholder.com/150/0000FF/FFFFFF?text=Honda", "Tipo": "Carro" },
+  { "Idvehiculo": 3, "Marca": "Ford", "Modelo": "Explorer", "Ano": 2022, "Kilometraje": 10000, "Descripcion": "SUV espacioso y potente, ideal para familias.", "ImagenPrincipal": "https://via.placeholder.com/150/00FF00/FFFFFF?text=Ford", "Tipo": "Carro" }
+]

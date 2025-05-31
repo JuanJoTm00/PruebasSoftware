@@ -1,0 +1,28 @@
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-image: none !important; 
+    width: auto; 
+    height: auto; 
+}
+
+
+.carousel-control-prev-icon::before {
+    content: '\276E';
+    font-size: 3rem; 
+    color: #000000; 
+    text-shadow: 0 0 5px rgba(174, 23, 23, 0.5); 
+}
+
+.carousel-control-next-icon::before {
+    content: '\276F';
+    font-size: 3rem;
+    color: #000000;
+    text-shadow: 0 0 5px rgba(174, 23, 23, 0.5);
+}
+
+
+.carousel-control-prev,
+.carousel-control-next {
+    width: 10%; 
+}

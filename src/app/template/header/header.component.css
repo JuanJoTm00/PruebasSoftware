@@ -1,27 +1,51 @@
-/* Fondo negro para la barra de navegación */
-.custom-navbar {
-    background-color: black;
+.navbar {
+    background-color: black !important; 
     padding: 10px 20px;
 }
 
-/* Estilo para el nombre de la página */
-.custom-brand {
+.navbar-brand {
     font-size: 24px;
     font-weight: bold;
-    color: white;
+    color: white; 
 }
 
-/* Botones con borde rojo y efectos al pasar el cursor */
-.custom-btn {
-    border: 2px solid red;
-    color: white;
-    background-color: black;
-    padding: 8px 12px;
-    transition: 0.3s;
+.navbar-toggler {
+    border: 2px solid red; 
+    transition: 0.3s ease; 
 }
 
-/* Cambia a rojo el fondo cuando pasas el mouse */
-.custom-btn:hover {
+.navbar-toggler:hover {
+    background-color: red; 
+}
+
+
+.offcanvas {
+    background-color: black; 
+}
+
+
+.offcanvas-title {
+    color: white; 
+    font-weight: bold;
+}
+
+
+.offcanvas-body .nav-link {
+    border: 1px solid transparent; 
+    color: white;
+    padding: 10px 15px;
+    transition: all 0.3s ease;
+}
+
+
+.offcanvas-body .nav-link:hover {
     background-color: red;
     color: black;
+    border-color: red;
+}
+
+
+.offcanvas-body .nav-link.disabled {
+    color: #cccccc !important;
+    cursor: default; 
 }

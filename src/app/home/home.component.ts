@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { VehiculoService } from '../services/vehiculo.service';
+import { Modal } from 'bootstrap'; 
+import { vehiculo } from '../models/vehiculo'; 
 
 @Component({
   selector: 'app-home',
@@ -7,12 +9,24 @@ import { VehiculoService } from '../services/vehiculo.service';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit{
-vehiculo: any[]=[];
-constructor(private vehiculoService: VehiculoService) {}
+export class HomeComponent implements OnInit {
+  vehiculo: vehiculo[] = []; 
+  vehiculoSeleccionado: vehiculo | undefined; 
+  
+  @ViewChild('vehiculoDetalleModal') modalElement: ElementRef | undefined; 
+  public bsModal: Modal | undefined; 
+
+  constructor(private vehiculoService: VehiculoService) {}
 
   ngOnInit(): void {
     this.cargarVehiculos();
+  }
+
+
+  ngAfterViewInit(): void {
+      if (this.modalElement) {
+          this.bsModal = new Modal(this.modalElement.nativeElement);
+      }
   }
 
   cargarVehiculos(): void {
@@ -23,4 +37,19 @@ constructor(private vehiculoService: VehiculoService) {}
     });
   }
 
+
+  verDetalles(vehiculo: vehiculo): void {
+    this.vehiculoSeleccionado = vehiculo; 
+    if (this.bsModal) {
+      this.bsModal.show();
+    }
+  }
+
+
+  cerrarDetalles(): void {
+    if (this.bsModal) {
+      this.bsModal.hide(); 
+    }
+    this.vehiculoSeleccionado = undefined; 
+  }
 }

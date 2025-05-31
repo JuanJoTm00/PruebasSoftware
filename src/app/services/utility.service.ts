@@ -1,59 +1,101 @@
 import { ElementRef, Injectable } from '@angular/core';
 import { Modal } from 'bootstrap';
-import { Observable } from 'rxjs';
+import { Observable, of, BehaviorSubject } from 'rxjs'; 
 import { administrador } from '../models/administrador';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
+import { tap, catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilityService {
   private sessionkey = "UsuariokeySession";
+  private apiBase: string;
 
-  constructor() { }
-  
-  login(ad:string,pwd:string):Observable<boolean>{
-    return new Observable(subs=>{
-      let rs= ad== 'admin' && pwd=='admin';
-      this.setSession(this.sessionkey,{Idadminstrador:1,Nombre:"Tuto",Email:"tuto@fgd.com",Contrasena:"1234"})
-      subs.next(rs);
-      subs.complete();
-    })
+
+  private currentUserSubject: BehaviorSubject<administrador | undefined>;
+ 
+
+  constructor(private http: HttpClient) {
+    this.apiBase = environment.urlApiBase + 'administrador';
+
+    this.currentUserSubject = new BehaviorSubject<administrador | undefined>(this.getSession<administrador>(this.sessionkey));
   }
 
-  getCurrenUser():administrador |undefined {
-    return this.getSession<administrador>(this.sessionkey);
+  login(nombre: string, contrasena: string): Observable<boolean> {
+    const loginPayload = { Nombre: nombre, Contrasena: contrasena };
 
-  }
-  logout(){
-    this.setSession(this.sessionkey,undefined);
+    return this.http.post<administrador>(`${this.apiBase}/login`, loginPayload)
+      .pipe(
+        tap(admin => {
+          if (admin) {
+            this.setSession(this.sessionkey, admin);
+            this.currentUserSubject.next(admin); 
+          } else {
+            this.setSession(this.sessionkey, undefined);
+            this.currentUserSubject.next(undefined); 
+          }
+        }),
+        map(admin => {
+          return !!admin && !!admin.Idadminstrador;
+        }),
+        catchError(error => {
+          console.error('Error en el login:', error);
+          this.setSession(this.sessionkey, undefined);
+          this.currentUserSubject.next(undefined); 
+          return of(false);
+        })
+      );
   }
 
-  isLoggedIn(): boolean{
-    let usr=this.getSession(this.sessionkey);
-    return (usr != undefined)
+ 
+  getCurrenUser(): Observable<administrador | undefined> {
+    return this.currentUserSubject.asObservable(); 
   }
 
-getSession<T>(key:string){
-let obj= sessionStorage.getItem(btoa(key));
-if(obj)
-  return JSON.parse(atob(obj)) as T;
-else
-return undefined
-}
+  logout() {
+    this.setSession(this.sessionkey, undefined);
+    this.currentUserSubject.next(undefined); 
+  }
+
+  isLoggedIn(): boolean {
+    let usr = this.getSession<administrador>(this.sessionkey); 
+    return (usr !== undefined && usr !== null && !!usr.Idadminstrador); 
+  }
+
+
+
+  getSession<T>(key:string): T | undefined {
+    try {
+      let obj= sessionStorage.getItem(btoa(key));
+      if(obj)
+        return JSON.parse(atob(obj)) as T;
+      else
+      return undefined
+    } catch (e) {
+      console.error("Error al obtener sesión:", e);
+      return undefined;
+    }
+  }
 
   setSession(key:string,value:any){
-if(value)
-  sessionStorage.setItem(btoa(key),btoa(JSON.stringify(value)));
-else
-sessionStorage.removeItem(key);
+    try {
+      if(value)
+        sessionStorage.setItem(btoa(key),btoa(JSON.stringify(value)));
+      else
+        sessionStorage.removeItem(btoa(key)); 
+    } catch (e) {
+      console.error("Error al guardar sesión:", e);
+    }
   }
 
-AbrirModal(modal:ElementRef | undefined){
-  if(modal){
-    let bsModal = Modal.getOrCreateInstance(modal.nativeElement);
-    bsModal.show();
+  AbrirModal(modal:ElementRef | undefined){
+    if(modal){
+      let bsModal = Modal.getOrCreateInstance(modal.nativeElement);
+      bsModal.show();
+    }
   }
-}
 
   CerrarModal(modal: ElementRef | undefined){
     if(modal){
@@ -66,8 +108,6 @@ AbrirModal(modal:ElementRef | undefined){
       }
       document.body.removeAttribute('style');
       document.body.removeAttribute('class');
-
     }
-   
   }
 }

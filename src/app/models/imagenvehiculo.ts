@@ -1,6 +1,6 @@
 export interface imagenvehiculo {
-    Idimagen: number;
-    Idvehiculo: number;
+    IdImagen: number;
+    IdVehiculo: number;
     UrlImagen: string;
   }
   
