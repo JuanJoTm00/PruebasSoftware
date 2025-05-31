@@ -28,7 +28,7 @@ describe('HomeComponent', () => {
 
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges(); // ejecuta ngOnInit
+    fixture.detectChanges(); 
   });
 
   it('debe crearse el componente', () => {
@@ -42,7 +42,7 @@ describe('HomeComponent', () => {
 
   it('debe mostrar los detalles del vehículo al hacer clic en "verDetalles"', () => {
     const vehiculoSeleccionado = mockVehiculos[0];
-    component.bsModal = { show: jest.fn() } as any; // Simular instancia de Modal
+    component.bsModal = { show: jest.fn() } as any; 
 
     component.verDetalles(vehiculoSeleccionado);
 
@@ -52,8 +52,7 @@ describe('HomeComponent', () => {
 
   it('debe cerrar los detalles y limpiar el vehículo seleccionado', () => {
     component.vehiculoSeleccionado = mockVehiculos[1];
-    component.bsModal = { hide: jest.fn() } as any; // Simular instancia de Modal
-
+    component.bsModal = { hide: jest.fn() } as any; 
     component.cerrarDetalles();
 
     expect(component.vehiculoSeleccionado).toBeUndefined();

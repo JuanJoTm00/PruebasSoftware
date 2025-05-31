@@ -6,7 +6,7 @@ import { vehiculo } from '../models/vehiculo';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-// Mock de datos
+
 const VEHICULOS_MOCK: vehiculo[] = [
   {
     Idvehiculo: 1,
@@ -61,7 +61,7 @@ describe('Interacción de Modales y Datos en HomeComponent (con Jest)', () => {
     component.ngOnInit();
     tick();
 
-    // Asignamos el mock sin problemas de tipo
+
     component.bsModal = {
       show: jest.fn(),
       hide: jest.fn()

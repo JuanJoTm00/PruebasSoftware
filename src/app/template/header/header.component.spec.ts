@@ -6,13 +6,13 @@ import { of, Subject } from 'rxjs';
 import { administrador } from '../../models/administrador';
 import { ElementRef } from '@angular/core';
 
-// Mock de la clase Offcanvas de Bootstrap
+
 class MockOffcanvasInstance {
   hide = jest.fn();
   dispose = jest.fn();
 }
 
-// Simulación global de bootstrap.Offcanvas
+
 (window as any).bootstrap = {
   Offcanvas: jest.fn().mockImplementation(() => new MockOffcanvasInstance()),
 };
@@ -29,11 +29,11 @@ describe('HeaderComponent', () => {
   let authSubject: Subject<administrador | null>;
 
   beforeEach(async () => {
-    // Creamos un Subject que simula el observable de usuario actual
+   
     authSubject = new Subject<administrador | null>();
 
     utilityServiceMock = {
-      getCurrenUser: jest.fn().mockReturnValue(authSubject.asObservable()), // Retornamos el subject como observable
+      getCurrenUser: jest.fn().mockReturnValue(authSubject.asObservable()), 
       getSession: jest.fn(),
       logout: jest.fn(),
     };
@@ -47,12 +47,12 @@ describe('HeaderComponent', () => {
     fixture = TestBed.createComponent(HeaderComponent);
     component = fixture.componentInstance;
 
-    // Simular ViewChild offcanvasElement (div)
+   
     component.offcanvasElement = new ElementRef(document.createElement('div'));
     jest.spyOn(component.offcanvasElement.nativeElement, 'addEventListener');
     jest.spyOn(component.offcanvasElement.nativeElement, 'removeEventListener');
 
-    fixture.detectChanges(); // Ejecutar ngOnInit y subscribirse
+    fixture.detectChanges();
   });
 
   afterEach(() => {

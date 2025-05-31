@@ -28,7 +28,7 @@ describe('AuthGuard', () => {
     router = TestBed.inject(Router);
     guard = TestBed.inject(AuthGuard);
 
-    jest.spyOn(router, 'navigate').mockImplementation(() => Promise.resolve(true)); // mockear navegación
+    jest.spyOn(router, 'navigate').mockImplementation(() => Promise.resolve(true)); 
   });
 
   it('debe permitir la navegación si el usuario está logueado', () => {

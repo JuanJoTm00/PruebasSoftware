@@ -132,7 +132,7 @@ describe('UtilityService', () => {
     const mockElementRef = new ElementRef(mockNativeElement);
     const mockModalInstance = { hide: jest.fn() };
 
-    // Crear backdrop simulado en el DOM
+
     const backdrop = document.createElement('div');
     backdrop.classList.add('modal-backdrop', 'fade', 'show');
     document.body.appendChild(backdrop);
@@ -146,7 +146,7 @@ describe('UtilityService', () => {
     expect(Modal.getInstance).toHaveBeenCalledWith(mockNativeElement);
     expect(mockModalInstance.hide).toHaveBeenCalled();
 
-    // Verificar que el backdrop fue removido
+
     expect(document.body.querySelector('.modal-backdrop.fade.show')).toBeNull();
 
     expect(removeAttributeSpy).toHaveBeenCalledWith('style');

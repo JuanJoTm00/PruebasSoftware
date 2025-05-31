@@ -1,7 +1,7 @@
-// vehiculo-content-flow.spec.ts (sin cambios, ya que el problema es probable que sea una cascada del fallo de navegación)
+
 import { test, expect, Page } from '@playwright/test';
 
-// Reutilizamos la función de login
+
 async function loginAsAdmin(page: Page) {
   await page.goto('http://localhost:4200/home');
   await page.getByRole('button', { name: 'Toggle navigation' }).click();
@@ -43,7 +43,7 @@ test.describe('Flujo Completo de Contenido: Gestión de Vehículos (CRUD)', () =
     await test.step('1. Iniciar sesión y navegar a Gestión Vehículos', async () => {
       await loginAsAdmin(page);
       await page.getByRole('button', { name: 'Toggle navigation' }).click();
-      await expect(page.locator('.offcanvas.show')).toBeVisible(); // Esperar offcanvas abierto
+      await expect(page.locator('.offcanvas.show')).toBeVisible(); 
       const gestionVehiculosLink = page.getByRole('link', { name: 'Gestión Vehículos' });
       await expect(gestionVehiculosLink).toBeVisible();
       await gestionVehiculosLink.click();

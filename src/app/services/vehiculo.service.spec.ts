@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { VehiculoService } from './vehiculo.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { vehiculo } from '../models/vehiculo'; // Asegúrate de que tu modelo se llame 'vehiculo' (minúscula)
+import { vehiculo } from '../models/vehiculo'; 
 import { environment } from '../../environments/environment';
 
 describe('VehiculoService', () => {
@@ -20,7 +20,7 @@ describe('VehiculoService', () => {
   });
 
   afterEach(() => {
-    httpMock.verify(); // Asegura que no haya peticiones pendientes
+    httpMock.verify(); 
   });
 
   it('debe ser creado', () => {
@@ -49,7 +49,7 @@ describe('VehiculoService', () => {
     };
 
     service.postvehiculo(nuevoVehiculo).subscribe(response => {
-      expect(response).toBeUndefined(); // Asumiendo que el post devuelve void
+      expect(response).toBeUndefined(); 
     });
 
     const req = httpMock.expectOne(`${apiUrl}/add`);

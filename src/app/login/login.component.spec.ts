@@ -54,22 +54,22 @@ describe('LoginComponent', () => {
   });
 
   it('debe navegar a "/" si el login es exitoso', fakeAsync(() => {
-    // Arrange
+
     component.ad = 'admin';
     component.pwd = '1234';
     utilServiceMock.login.mockReturnValue(of(true));
 
-    // Act
+ 
     component.login();
     tick();
 
-    // Assert
+ 
     expect(utilServiceMock.login).toHaveBeenCalledWith('admin', '1234');
     expect(routerMock.navigate).toHaveBeenCalledWith(['/']);
   }));
 
   it('debe mostrar alerta si el login falla', fakeAsync(() => {
-    // Espía el método fire de SweetAlert2
+
     const swalSpy = jest.spyOn(Swal, 'fire');
 
     component.ad = 'admin';

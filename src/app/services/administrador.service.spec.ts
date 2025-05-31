@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 import { AdministradorService } from './administrador.service';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { environment } from '../../environments/environment'; // Asegúrate de tener esto
-import { administrador } from '../models/administrador'; // Asegúrate de tener este modelo
+import { environment } from '../../environments/environment'; 
+import { administrador } from '../models/administrador'; 
 
 describe('AdministradorService', () => {
   let service: AdministradorService;
   let httpMock: HttpTestingController;
-  const apiUrl = environment.urlApiBase + 'administrador'; // Ruta base de tu API para administradores
+  const apiUrl = environment.urlApiBase + 'administrador'; 
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -20,7 +20,7 @@ describe('AdministradorService', () => {
   });
 
   afterEach(() => {
-    // Asegura que no haya peticiones pendientes
+
     httpMock.verify();
   });
 
@@ -28,7 +28,7 @@ describe('AdministradorService', () => {
     expect(service).toBeTruthy();
   });
 
-  // --- Pruebas de CRUD ---
+
 
   it('debe obtener todos los administradores (GET)', () => {
     const mockAdministradores: administrador[] = [
@@ -42,7 +42,7 @@ describe('AdministradorService', () => {
 
     const req = httpMock.expectOne(`${apiUrl}/`);
     expect(req.request.method).toBe('GET');
-    req.flush(mockAdministradores); // Simula la respuesta de la API
+    req.flush(mockAdministradores); 
   });
 
 
@@ -51,15 +51,14 @@ describe('AdministradorService', () => {
     const newAdmin: administrador = { Idadminstrador: 0, Nombre: 'Nuevo Admin', Email: 'nuevo@test.com', Contrasena: 'newpass' };
 
     service.postadministrador(newAdmin).subscribe((response) => {
-      // Si tu API devuelve algo al post (ej. el objeto creado), verifica aquí
-      // Si no devuelve nada (200 OK sin cuerpo), el response será undefined o null.
-      expect(response).toBeUndefined(); // Asumiendo que devuelve void o un 204 No Content
+ 
+      expect(response).toBeUndefined(); 
     });
 
     const req = httpMock.expectOne(`${apiUrl}/add`);
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toEqual(newAdmin);
-    req.flush(null); // Simula una respuesta exitosa sin contenido
+    req.flush(null); 
   });
 
   it('debe actualizar un administrador existente (PUT)', () => {
